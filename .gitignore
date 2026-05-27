@@ -1,0 +1,59 @@
+# ============================================================
+# HorRAGor – .gitignore
+# ============================================================
+
+# Secrets et configuration locale
+.env
+*.env
+
+# Données brutes (volumineuses, non versionnées)
+data/raw/
+data/processed/
+# Conserver uniquement les échantillons Gold pour la démonstration
+data/gold/*.parquet
+!data/gold/sample_gold.parquet
+
+# Logs
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Spark
+spark-warehouse/
+derby.log
+metastore_db/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests et couverture
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/

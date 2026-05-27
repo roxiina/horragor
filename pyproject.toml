@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "horragor"
+version = "1.0.0"
+description = "Pipeline d'ingestion multi-sources pour l'agent conversationnel HorRAGor (horreur cinéma/littérature/jeux vidéo)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+dependencies = [
+    # --- Extraction ---
+    "requests>=2.32.0",          # Appels API TMDB
+    "selenium>=4.20.0",           # Web scraping Rotten Tomatoes
+    "webdriver-manager>=4.0.0",  # Gestion automatique du chromedriver
+    "polars>=0.20.0",             # Lecture CSV Kaggle haute performance
+    "pyspark>=3.5.0",             # Traitement Big Data fichiers splittés
+
+    # --- Transformation ---
+    "rapidfuzz>=3.9.0",           # Fuzzy matching (Levenshtein) pour réconciliation MDM
+    "beautifulsoup4>=4.12.0",     # Nettoyage HTML résiduel
+    "python-dateutil>=2.9.0",     # Parsing dates hétérogènes
+
+    # --- Modélisation & Persistance ---
+    "sqlalchemy>=2.0.0",          # ORM pour modèles relationnels
+    "supabase>=2.4.0",            # Client Supabase (PostgreSQL hébergé)
+    "psycopg2-binary>=2.9.0",     # Driver PostgreSQL pour SQLAlchemy
+
+    # --- Sérialisation ---
+    "pyarrow>=16.0.0",            # Export au format Parquet (Jeu de données Gold)
+    "pandas>=2.2.0",              # Interopérabilité Spark ↔ Polars ↔ Parquet
+
+    # --- Configuration ---
+    "python-dotenv>=1.0.0",       # Lecture des variables d'environnement (.env)
+    "pydantic-settings>=2.0.0",   # Validation typée de la configuration
+
+    # --- Logging & Résilience ---
+    "tenacity>=9.0.0",            # Mécanisme de retry automatique
+    "loguru>=0.7.0",              # Logging structuré et coloré
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-mock>=3.14.0",
+    "coverage>=7.5.0",
+    "ruff>=0.4.0",          # Linter + formatter
+    "mypy>=1.10.0",
+]
+
+[project.scripts]
+horragor-pipeline = "src.pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
