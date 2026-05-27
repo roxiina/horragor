@@ -41,6 +41,7 @@ ENV/
 # Jupyter
 .ipynb_checkpoints/
 *.ipynb
+!demo_pipeline.ipynb
 
 # Spark
 spark-warehouse/
